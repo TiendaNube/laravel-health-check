@@ -1,6 +1,7 @@
 <?php namespace NpmWeb\LaravelHealthCheck\Checks;
 
-use File;
+use Illuminate\Support\Facades\File;
+use Exception;
 
 /**
  * Checks that an appropriate cron is set up in a given file. Note: this doesn't

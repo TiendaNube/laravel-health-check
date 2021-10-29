@@ -1,7 +1,8 @@
 <?php namespace NpmWeb\LaravelHealthCheck\Checks;
 
 use Exception;
-use Mail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class MailHealthCheck extends AbstractHealthCheck {
 
@@ -9,7 +10,7 @@ class MailHealthCheck extends AbstractHealthCheck {
     protected $method;
 
     public function configure( $config = null ) {
-        \Log::debug(__METHOD__.'() '.print_r($config,true));
+        Log::debug(__METHOD__.'() '.print_r($config,true));
         parent::configure($config);
         $this->emailAddr = $config['email'];
         if( isset($config['method']) ) {

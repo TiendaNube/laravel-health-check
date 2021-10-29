@@ -1,10 +1,10 @@
 <?php namespace NpmWeb\LaravelHealthCheck\Controllers;
 
-use App;
-use Illuminate\Routing\Controller;
-use Response;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
-class HealthCheckController extends Controller {
+class HealthCheckController {
 
     protected $healthChecks;
 
@@ -15,7 +15,7 @@ class HealthCheckController extends Controller {
     public function index()
     {
         $checkNames = array_map( function($check) {
-             \Log::debug(__METHOD__.':: got another health-check! ['. $check->getName().']');
+             Log::debug(__METHOD__.':: got another health-check! ['. $check->getName().']');
             return $check->getName();
         }, $this->healthChecks );
 
