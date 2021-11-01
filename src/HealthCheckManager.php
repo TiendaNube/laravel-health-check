@@ -1,7 +1,7 @@
 <?php namespace NpmWeb\LaravelHealthCheck;
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Manager;
-
 use NpmWeb\LaravelHealthCheck\Checks\DatabaseHealthCheck;
 use NpmWeb\LaravelHealthCheck\Checks\FilesystemHealthCheck;
 use NpmWeb\LaravelHealthCheck\Checks\FlysystemHealthCheck;
@@ -12,16 +12,10 @@ use NpmWeb\LaravelHealthCheck\Checks\WebServiceHealthCheck;
 class HealthCheckManager extends Manager {
 
     static $packageName = 'laravel-health-check';
-    private $config;
+    protected $config;
     private $checks = null;
 
-    /**
-     * Create a new manager instance.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
-     */
-    public function __construct($app)
+    public function __construct(Container $app)
     {
         parent::__construct($app);
         $this->config = config( self::$packageName . '.checks');

@@ -1,8 +1,7 @@
 <?php namespace NpmWeb\LaravelHealthCheck;
 
 use Illuminate\Support\ServiceProvider;
-use Log;
-//use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 
 class LaravelHealthCheckServiceProvider extends ServiceProvider {
 
@@ -38,7 +37,7 @@ class LaravelHealthCheckServiceProvider extends ServiceProvider {
         $this->loadViewsFrom(__DIR__.'../views', 'laravel-health-check');
         $this->mergeConfigFrom( $this->configFilePath, 'laravel-health-check' );
 
-        \Route::resource(
+        Route::resource(
             'monitor/health',
             'NpmWeb\LaravelHealthCheck\Controllers\HealthCheckController',
             ['only' => ['index','show']]

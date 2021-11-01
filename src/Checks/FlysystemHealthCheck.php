@@ -1,14 +1,12 @@
 <?php namespace NpmWeb\LaravelHealthCheck\Checks;
 
-use Closure;
 use Exception;
 use League\Flysystem\FileSystem;
-
-// supported adapters/drivers
 use League\Flysystem\Adapter\Ftp as FtpAdapter;
 use League\Flysystem\Sftp\SftpAdapter;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Rackspace\RackspaceAdapter;
+use Illuminate\Support\Facades\Log;
 
 /*
  * When using Flysystem directly, this check makes sure
@@ -39,7 +37,7 @@ class FlysystemHealthCheck extends AbstractHealthCheck {
             $config = $fsConfig;
         }
 
-        \Log::debug(__METHOD__.':: instantiating a Flysystem for '.$driver);
+        Log::debug(__METHOD__.':: instantiating a Flysystem for '.$driver);
         $adapter = $this->getAdapterForDriver($driver, $config);
 
         return new Filesystem ( $adapter );
@@ -50,12 +48,12 @@ class FlysystemHealthCheck extends AbstractHealthCheck {
     }
 
     public function check() {
-        \Log::debug(__METHOD__.'()');
+        Log::debug(__METHOD__.'()');
         try {
             $files = $this->flysystem->listContents();
             return ( $files !== false && !empty($files));
         } catch( Exception $e ) {
-            \Log::error(__METHOD__.':: Exception getting files: '.$e->getMessage()) ;
+            Log::error(__METHOD__.':: Exception getting files: '.$e->getMessage()) ;
             return false;
         }
     }

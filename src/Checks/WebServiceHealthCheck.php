@@ -1,6 +1,7 @@
 <?php namespace NpmWeb\LaravelHealthCheck\Checks;
 
 use GuzzleHttp\Client as HttpClient;
+use Illuminate\Support\Facades\Log;
 
 class WebServiceHealthCheck extends AbstractHealthCheck {
 
@@ -11,7 +12,7 @@ class WebServiceHealthCheck extends AbstractHealthCheck {
     public function check() {
         try {
             $httpClient = new HttpClient();
-            \Log::debug(__METHOD__.':: checking URL '.$this->config['url']);
+            Log::debug(__METHOD__.':: checking URL '.$this->config['url']);
             $response = $httpClient->get($this->config['url']);
             if (array_key_exists('check', $this->config)) {
                 return $this->config['check']->__invoke($response);
@@ -20,7 +21,7 @@ class WebServiceHealthCheck extends AbstractHealthCheck {
                 return !empty($response->getBody());
             }
         } catch( \Exception $e ) {
-            \Log::error('Exception doing web service check: '.$e->getMessage());
+            Log::error('Exception doing web service check: '.$e->getMessage());
             return false;
         }
     }
